@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Students of {{ group.title }} group:</h2>
+    {% for student in students %}
+        <tr>
+            <td>
+                <a href="{{ student.get_absolute_url }} ">{{ student.fio }}</a>
+            </td>
+            {% if user.is_authenticated %}
+                <td>
+                    <a href="{% url 'students:student_update' student.pk %}">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </a></td>
+                <td>
+                    <a href="{% url 'students:student_delete' student.pk %}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </a>
+                </td>
+            {% else %}
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            {% endif %}
+        </tr>
+        <br>
+    {% endfor %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'students:student_create' %}">
+    {% endif %}
+<button type="submit" class="btn btn-primary">Create new student</button>
+</a>
+{% endblock %}

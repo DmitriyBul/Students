@@ -1,0 +1,27 @@
+[
+  {
+    "pk": "1",
+    "model": "students.student",
+    "fields": {
+      "fio": "John Lennon",
+      "birth_date": "2018-01-01",
+      "student_ticket": "8521"
+    }
+  },
+  {
+    "pk": "2",
+    "model": "students.student",
+    "fields": {
+      "fio": "Ivan Ivanov",
+      "birth_date": "2015-05-05",
+      "student_ticket": "8521"
+    }
+  },
+  {
+    "pk": "1",
+    "model": "students.group",
+    "fields": {
+      "title": "8e52"
+    }
+  }
+]

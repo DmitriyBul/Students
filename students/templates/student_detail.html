@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Page of student {{ student.fio }}</h2>
+    Student's ticket: {{ student.student_ticket }}
+    <br>
+    Date of birth: {{ student.birth_date }}
+    <br>
+    Student's group: {{ student.group }}
+{% endblock %}
