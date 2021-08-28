@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load students_tags %}
 {% block content %}
     <h2>Page of student {{ student.fio }}</h2>
     Student's ticket: {{ student.student_ticket }}
@@ -7,4 +7,6 @@
     Date of birth: {{ student.birth_date }}
     <br>
     Student's group: {{ student.group }}
+    <br>
+    {% edit user.username %}
 {% endblock %}

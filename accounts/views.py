@@ -1,8 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import LoginForm, UserRegistrationForm, EmailLoginForm
 from django.contrib.auth import authenticate, login
-# Create your views here.
-from .forms import LoginForm, UserRegistrationForm
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -22,22 +22,31 @@ def register(request):
     return render(request, 'registration/register.html', {'user_form': user_form})
 
 
-def user_login2(request):
+# create a function to resolve email to username
+def get_user(email):
+    try:
+        return User.objects.get(email=email)
+    except User.DoesNotExist:
+        return None
+
+
+# create a view that authenticate user with email
+def email_login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = EmailLoginForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request,
-                                username=cd['username'],
-                                password=cd['password'])
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponse('Authenticated successfully')
+            email = request.POST['email']
+            password = request.POST['password']
+            username = get_user(email)
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('students:group_list')
+                else:
+                    return redirect('students:group_list')
             else:
-                return HttpResponse('Disabled account')
-        else:
-            return HttpResponse('Invalid login')
+                return redirect('students:group_list')
     else:
-        form = LoginForm()
-    return render(request, 'account/login2.html', {'form': form})
+        form = EmailLoginForm()
+    return render(request, 'account/email_login.html', {'form': form})

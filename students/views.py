@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.base import View
 from django.db.models import Count
-
+from django.db import connection
 from students.forms import GroupForm, StudentForm
 from students.models import Group, Student
 
